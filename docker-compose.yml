@@ -27,7 +27,7 @@ services:
     image: neeraj2005/task-frontend:latest
     container_name: react
     ports:
-      - "2048:85"
+      - "2048:80"
     depends_on:
       - backend
     restart: on-failure
