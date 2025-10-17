@@ -11,14 +11,20 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - springboot-mysql-net
-
+  healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pNee@7483"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
   backend:
     image: neeraj2005/task-backend:latest
     container_name: springboot
     ports:
       - "2040:2005"
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     restart: on-failure
     networks:
       - springboot-mysql-net
